@@ -39,3 +39,32 @@ class VerilenIs(models.Model):
 
     def __str__(self):
         return self.is_aciklama
+
+
+class BorcDefteri(models.Model):
+    borclu_isim = models.CharField(max_length=100, verbose_name="Borçlu İsmi")
+    borclu_telefon = models.CharField(max_length=11, verbose_name="Telefon")
+    borclu_aciklama = models.TextField(verbose_name="Açıklama")
+    borc_baslangic = models.DateTimeField(auto_now_add=True)
+    borc_son_odeme = models.DateTimeField(blank=True, null=True, verbose_name="Ödeme Tarihi")
+    
+    class Meta:
+        verbose_name = "Borç Defteri"
+        verbose_name_plural = "Borç Defteri"
+    
+    def __str__(self):
+        return self.borclu_isim
+    
+
+class Notlar(models.Model):
+    not_aciklama = models.TextField(verbose_name="Not Açıklaması")
+    yapildi_mi = models.BooleanField(default=False, verbose_name="Yapıldı mı")
+    not_tarihi = models.DateTimeField(auto_now_add=True, null=False)
+
+    class Meta:
+        verbose_name = "Not"
+        verbose_name_plural = "Notlar"
+
+    def __str__(self):
+        return self.not_aciklama
+    
