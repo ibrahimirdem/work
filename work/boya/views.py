@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Notlar
+from .models import Notlar, BorcDefteri
 from .forms import NotEkleForm
 
 
@@ -37,3 +37,7 @@ def not_ekle(request):
             'not_aciklama': not_olustur.not_aciklama,
             'yapildi_mi': not_olustur.yapildi_mi}
     return JsonResponse(data)
+
+def borc_defteri(request):
+    defterler = BorcDefteri.objects.all()
+    return render(request, 'defter.html', {'defterler': defterler})
