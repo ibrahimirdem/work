@@ -9,16 +9,44 @@
     <title>a</title>
 </head>
 <body>
-
+<div id="ana">
 {% for notum in notlar %}
 
     <input type="checkbox"  id="{{notum.id}}" name="{{notum.id}}" onclick="myFunction(this.name)" {% if notum.yapildi_mi %} checked{% endif %}>
-    <label id="label-{{notum.id}}" name="{{notum.id}}" style="text-decoration:{% if notum.yapildi_mi %}line-through{% else %}none{% endif %}; color:{% if notum.yapildi_mi %}gray{% else %}black{% endif %};"> {{ notum.not_aciklama }}</label><br>
+    <label id="label-{{notum.id}}" name="{{notum.id}}" style="text-decoration:{% if notum.yapildi_mi %}line-through{% else %}none{% endif %}; color:{% if notum.yapildi_mi %}gray{% else %}black{% endif %};">{{notum.not_aciklama}}</label><br>
 
 {% endfor %}
+</div>
+<p>
+    <input type="text" id="not" name="not">
+    <button name="ekle" type="submit" onclick=ekleme()>Ekle</button>
+</p>
 
-<p>asdasd</p>
 <script>
+function ekleme() {
+  var x = document.getElementById("not").value;
+  document.getElementById('not').value = ''
+  $.ajax({
+        url: '/ajax/not_ekle/',
+        data: {'not': x,},
+        dataType: 'json',
+        success: function (data) {
+          var check=document.createElement("input");
+          check.type="checkbox";
+          check.id = data.id
+          check.name = data.id
+          check.onclick = "myFunction(this.name)"
+          var para=document.createElement("label");
+          para.innerHTML = data.not_aciklama;
+          var bosluk = document.createElement("br")
+          document.getElementById("ana").appendChild(check);
+          document.getElementById("ana").appendChild(para);
+          document.getElementById("ana").appendChild(bosluk);
+        }
+      });
+}
+
+
 function myFunction(isim) {
   var checkBox = document.getElementById(isim);
   var text = document.getElementById("label-"+isim);

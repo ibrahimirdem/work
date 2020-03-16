@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.ana_sayfa, name="home"),
     path('ajax/validate_username/', views.validate_username, name="degis"),
+    path('ajax/not_ekle/', views.not_ekle, name="ekle"),
+
 ]

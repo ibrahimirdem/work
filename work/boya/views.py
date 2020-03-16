@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Notlar
+from .forms import NotEkleForm
 
 
 # Create your views here.
@@ -18,4 +19,14 @@ def validate_username(request):
         notum.yapildi_mi = False
     notum.save()
     data = {'is_taken': 'merhabalar'}
+    return JsonResponse(data)
+
+def not_ekle(request):
+    notum = request.GET.get('not', None)
+    not_olustur = Notlar(not_aciklama=notum)
+    not_olustur.save()
+
+    data = {'id': not_olustur.id,
+            'not_aciklama': not_olustur.not_aciklama,
+            'yapildi_mi': not_olustur.yapildi_mi}
     return JsonResponse(data)
