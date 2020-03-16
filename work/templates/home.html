@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>a</title>
+</head>
+<body>
+
+{% for notum in notlar %}
+
+    <input type="checkbox"  id="{{notum.id}}" name="{{notum.id}}" onclick="myFunction(this.name)" {% if notum.yapildi_mi %} checked{% endif %}>
+    <label id="label-{{notum.id}}" name="{{notum.id}}" style="text-decoration:{% if notum.yapildi_mi %}line-through{% else %}none{% endif %}; color:{% if notum.yapildi_mi %}gray{% else %}black{% endif %};"> {{ notum.not_aciklama }}</label><br>
+
+{% endfor %}
+
+<p>asdasd</p>
+<script>
+function myFunction(isim) {
+  var checkBox = document.getElementById(isim);
+  var text = document.getElementById("label-"+isim);
+
+  if (checkBox.checked == true){
+    text.style.textDecoration = "line-through";
+    text.style.color = "gray";
+    $.ajax({
+        url: '/ajax/validate_username/',
+        data: {'numara': isim, 'deger':'yapildi'},
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            console.log('Başarılıl');
+          }
+        }
+      });
+
+  } else {
+     text.style.textDecoration = "none";
+     text.style.color = "black";
+     $.ajax({
+        url: '/ajax/validate_username/',
+        data: {'numara': isim, 'deger':'yapilmadi'},
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            console.log('Başarılıl');
+          }
+        }
+      });
+  }
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</body>
+
+</html>

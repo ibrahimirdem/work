@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from boya import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.ana_sayfa, name="home"),
+    path('ajax/validate_username/', views.validate_username, name="degis"),
 ]
