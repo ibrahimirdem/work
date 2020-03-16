@@ -57,7 +57,7 @@ class BorcDefteri(models.Model):
     
 
 class Notlar(models.Model):
-    not_aciklama = models.TextField(verbose_name="Not Açıklaması")
+    not_aciklama = models.CharField(max_length=200, verbose_name="Not Açıklaması")
     yapildi_mi = models.BooleanField(default=False, verbose_name="Yapıldı mı")
     not_tarihi = models.DateTimeField(auto_now_add=True, null=False)
 

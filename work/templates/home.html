@@ -17,10 +17,11 @@
 
 {% endfor %}
 </div>
-<p>
-    <input type="text" id="not" name="not">
-    <button name="ekle" type="submit" onclick=ekleme()>Ekle</button>
-</p>
+<br>
+<form method="POST" class="post-form">{% csrf_token %}
+        {{ forms}}
+        <button type="submit">Kaydet</button>
+</form>
 
 <script>
 function ekleme() {

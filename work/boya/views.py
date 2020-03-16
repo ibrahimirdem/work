@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Notlar
 from .forms import NotEkleForm
@@ -6,8 +6,15 @@ from .forms import NotEkleForm
 
 # Create your views here.
 def ana_sayfa(request):
+    if request.method == "POST":
+        forms = NotEkleForm(request.POST)
+        if forms.is_valid():
+            forms.save()
+            return redirect('home')
+    else:
+        forms = NotEkleForm()
     notlar = Notlar.objects.all()
-    return render(request, 'home.html', {'notlar':notlar})
+    return render(request, 'home.html', {'notlar':notlar, 'forms':forms})
 
 def validate_username(request):
     numara = request.GET.get('numara', None)
