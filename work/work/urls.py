@@ -23,6 +23,8 @@ urlpatterns = [
     path('ajax/validate_username/', views.validate_username, name="degis"),
     path('ajax/not_ekle/', views.not_ekle, name="ekle"),
     path('defter/', views.borc_defteri, name="defter"),
-    path('defter/ekle', views.borc_defteri_ekle, name="defter_ekle")
+    path('defter/defterler/<id>', views.borc_defteri_id, name="defter_ayrinti"),
+    path('defter/ekle', views.borc_defteri_ekle, name="defter_ekle"),
+    path('defter/<id>/sil/', views.borc_defteri_sil, name="defter_sil"),
 
 ]

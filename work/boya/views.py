@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from .models import Notlar, BorcDefteri
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse, Http404
+from .models import Notlar, BorcDefteri, Boyaci
 from .forms import NotEkleForm, DefterEkleForm
 
 
@@ -41,6 +41,16 @@ def not_ekle(request):
 def borc_defteri(request):
     defterler = BorcDefteri.objects.all()
     return render(request, 'defter.html', {'defterler': defterler})
+
+
+def borc_defteri_sil(request, id):
+    borc_defteri = BorcDefteri.objects.get(id=id)
+    borc_defteri.delete()
+    return redirect('defter')
+
+def borc_defteri_id(request, id):
+    defter = BorcDefteri.objects.get(id=id)
+    return render(request, 'defter_ayrinti.html', {'defter': defter})
 
 def borc_defteri_ekle(request):
     if request.method == "POST":
