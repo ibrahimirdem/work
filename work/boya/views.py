@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Notlar, BorcDefteri
-from .forms import NotEkleForm
+from .forms import NotEkleForm, DefterEkleForm
 
 
 # Create your views here.
@@ -41,3 +41,13 @@ def not_ekle(request):
 def borc_defteri(request):
     defterler = BorcDefteri.objects.all()
     return render(request, 'defter.html', {'defterler': defterler})
+
+def borc_defteri_ekle(request):
+    if request.method == "POST":
+        forms = DefterEkleForm(request.POST)
+        if forms.is_valid():
+            forms.save()
+            return redirect('defter')
+    else:
+        forms = DefterEkleForm()
+    return render(request, 'defter_ekle.html', {'forms':forms})
