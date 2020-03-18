@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, Http404
 from .models import Notlar, BorcDefteri, Boyaci
-from .forms import NotEkleForm, DefterEkleForm
+from .forms import NotEkleForm, DefterEkleForm, BoyaciEkleForm
 
 
 # Create your views here.
@@ -66,7 +66,36 @@ def boyaci_ayrinti(request, id):
     boyaci = Boyaci.objects.get(id=id)
     return render(request, 'boyaci_ayrinti.html', {'boyaci': boyaci})
     
-
 def boyacilar(request):
     boyacilar = Boyaci.objects.all()
     return render(request, 'boyacilar.html',  {'boyacilar': boyacilar})
+
+def boyaci_ekle(request):
+    if request.method == "POST":
+        forms = BoyaciEkleForm(request.POST)
+        if forms.is_valid():
+            forms.save()
+            return redirect("boyacilar")
+    else:
+        forms = BoyaciEkleForm()
+    return render(request, 'boyaci_ekle.html', {'forms':forms})
+
+def boyaci_sil(request, id):
+    boyaci = Boyaci.objects.get(id=id)
+    boyaci.delete()
+    return redirect("boyacilar")
+
+def boyaci_duzenle(request, id):
+    boyaci = Boyaci.objects.get(id=id)
+    if request.method == "POST":
+        forms = BoyaciEkleForm(request.POST, instance=boyaci)
+        if forms.is_valid():
+            forms.save()
+            return redirect("boyacilar")
+    else:
+        forms = BoyaciEkleForm(instance=boyaci)
+    return render(request, 'boyaci_duzenle.html', {'forms':forms})
+
+    
+
+    

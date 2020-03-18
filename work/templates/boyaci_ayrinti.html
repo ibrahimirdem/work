@@ -2,8 +2,49 @@
 
 {% block content %}
 <div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'boyacilar' %}">Boyacılar</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Profile</li>
+        </ol>
+      </nav>
     <div class="row">
-    <h1>{{ boyaci.isim|title }}</h1>
+    <div class="col-6">
+        <h1>{{ boyaci.isim|title }}</h1>
+    </div>
+    <div class="col-6"> 
+        
+        <button type="button" class="btn btn-outline-danger float-right ml-1" data-toggle="modal" data-target="#exampleModal">Sil</button>
+                <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                {{boyaci.isim|title}} isimli kişiye silmek istediğinizden emin misiniz?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                <a href="{% url 'boyaci_sil' boyaci.id %}"><button type="button" class="btn btn-danger">Sil</button></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <a href="{% url 'boyaci_duzenle' boyaci.id %}">
+            <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
+            <button type="button" class="btn btn-outline-success float-right ml-1">Düzenle</button>
+        </a>
+        <a href="#">
+            <button type="button" class="btn btn-outline-primary float-right ml-1">İş Ekle</button>
+        </a>
+        
+    </div>
     </div>
     <hr>    
     <div class="row">

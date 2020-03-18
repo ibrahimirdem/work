@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'boyacilar' %}">Boyacılar</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Düzenle</li>
+        </ol>
+    </nav>
+    <h2>Boyaci Düzenle</h2>
+    <hr>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{forms|crispy}}
+        <button type="submit" class="btn btn-success">Kaydet</button>
+    </form>
+</div>
+{% endblock content %}
