@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+    <h1>{{ boyaci.isim|title }}</h1>
+    </div>
+    <hr>    
+    <div class="row">
+        <div id="name" class="col-xl-3 col-sm-12 mb-5">
+            <h6 class="text-muted">BİLGİLER</h6>
+            <hr>
+            <h5>Telefon</h5>
+            <p>{{ boyaci.telefon_no }}</p>
+            <hr>
+            <h5>Açıklama</h5>
+            <p>{{ boyaci.aciklama }}</p>
+            <hr>
+            <h5>Etiket</h5>
+            <p>
+                {% for etiket in boyaci.boyaci_etiket.all %}
+                    <a href="#" class="badge badge-primary">{{ etiket }}</a>
+                {% endfor %}
+            </p>
+        </div>
+        <div id="isler" class="col-xl-9 col-sm-12">
+        <h6 class="text-muted">YAPTIĞI İŞLER</h6>
+        <hr>
+        {% if boyaci.verilen_isler.all %}
+        {% for is in boyaci.verilen_isler.all %}
+            <h5>{{is.is_tarihi|date:"d M Y"}} - {{is.is_tarihi|timesince}} önce</h5>
+            <p>{{is.is_aciklama}}</p>
+            <hr>
+        {% endfor %}
+        {% else %}
+        <p>Verilen iş bulunmamaktadır.</p>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

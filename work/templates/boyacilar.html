@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      
+      <th scope="col">İsim</th>
+      <th scope="col">Telefon</th>
+      <th scope="col">Etiketler</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for boyaci in boyacilar %}
+    <tr>
+      <td><a href="{% url 'boyaci_ayrinti' boyaci.id %}">{{boyaci.isim|title}}</a></td>
+      <td>{{boyaci.telefon_no}}</td>
+      <td>
+      {% for etiket in boyaci.boyaci_etiket.all %}
+        <a href="#" class="badge badge-primary">{{ etiket }}</a>
+      {% endfor %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock content %}

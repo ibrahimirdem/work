@@ -61,3 +61,12 @@ def borc_defteri_ekle(request):
     else:
         forms = DefterEkleForm()
     return render(request, 'defter_ekle.html', {'forms':forms})
+
+def boyaci_ayrinti(request, id):
+    boyaci = Boyaci.objects.get(id=id)
+    return render(request, 'boyaci_ayrinti.html', {'boyaci': boyaci})
+    
+
+def boyacilar(request):
+    boyacilar = Boyaci.objects.all()
+    return render(request, 'boyacilar.html',  {'boyacilar': boyacilar})

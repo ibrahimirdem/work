@@ -1,28 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-3">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <title>a</title>
-</head>
-<body>
-<div id="ana">
-{% for notum in notlar %}
+<div class="row overflow-auto">
+  <div class="card w-50">
+    <div class="card-header">
+      Notlar
+    </div>
+    <div class="card-body overflow-auto pt-1 pl-0" style="height:200px;">
+      <ul class="list-group list-group-flush">
+      {% for notum in notlar %}
 
-    <input type="checkbox"  id="{{notum.id}}" name="{{notum.id}}" onclick="myFunction(this.name)" {% if notum.yapildi_mi %} checked{% endif %}>
-    <label id="label-{{notum.id}}" name="{{notum.id}}" style="text-decoration:{% if notum.yapildi_mi %}line-through{% else %}none{% endif %}; color:{% if notum.yapildi_mi %}gray{% else %}black{% endif %};">{{notum.not_aciklama}}</label><br>
+        <li class="list-group-item pt-1 pb-0 pl-3"><input type="checkbox"  id="{{notum.id}}" name="{{notum.id}}" onclick="myFunction(this.name)" {% if notum.yapildi_mi %} checked{% endif %}>
+        <label id="label-{{notum.id}}" name="{{notum.id}}" style="text-decoration:{% if notum.yapildi_mi %}line-through{% else %}none{% endif %}; color:{% if notum.yapildi_mi %}gray{% else %}black{% endif %};">{{notum.not_aciklama}}</label></li>
 
-{% endfor %}
+      {% endfor %}
+      </ul>
+    </div>
+    <div class="card-footer ">
+      <form method="POST" class="form-inline m-0" >{% csrf_token %}
+        {{forms|crispy}}
+        <button class="btn btn-primary ml-2" type="submit">Ekle</button>
+      </form>
+    </div>
+  </div>
 </div>
 <br>
-<form method="POST" class="post-form">{% csrf_token %}
-  {{forms}}
-  <button type="submit">Kaydet</button>
-</form>
 
+</div>
 <script>
 
 function myFunction(isim) {
@@ -59,7 +65,4 @@ function myFunction(isim) {
   }
 }
 </script>
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-</body>
-
-</html>
+{% endblock content %}
