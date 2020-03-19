@@ -25,6 +25,7 @@ urlpatterns = [
     path('defter/', views.borc_defteri, name="defter"),
     path('defter/defterler/<id>', views.borc_defteri_id, name="defter_ayrinti"),
     path('defter/ekle', views.borc_defteri_ekle, name="defter_ekle"),
+    path('defter/<id>/duzenle/', views.borc_defteri_duzenle, name="defter_duzenle"),
     path('defter/<id>/sil/', views.borc_defteri_sil, name="defter_sil"),
     path('boyacilar/', views.boyacilar, name="boyacilar"),
     path('boyaci/<id>/detay', views.boyaci_ayrinti, name="boyaci_ayrinti"),

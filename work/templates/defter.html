@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Borç Defteri</li>
+        </ol>
+      </nav>
       <div class="row justify-content-center">
         <div class="col-12">
           <div class="row">
@@ -18,7 +24,7 @@
               </div>
               </div>
               <div class="card-body">
-                <p class="card-text">{{defter.borclu_aciklama}}</p>
+                <p class="card-text">{{defter.borclu_aciklama|linebreaks }}</p>
               </div>
               <div class="card-footer text-muted">
               <div class="row">

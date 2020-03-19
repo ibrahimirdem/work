@@ -1,3 +1,41 @@
-<p>{{defter.borclu_isim}}</p>
-<p>{{defter.borclu_telefon}}</p>
-<p>{{defter.borclu_aciklama}}</p>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'defter' %}">Borç Defteri</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Detay</li>
+        </ol>
+    </nav>
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="row mb-2">
+          <div class="col-12 text-right">
+          <a type="button" href="{% url 'defter_duzenle' defter.id %}" class="btn btn-outline-primary align-right">Düzenle</a>
+          <a type="button" href="{% url 'defter_sil' defter.id %}" class="btn btn-outline-danger align-right">Sil</a>
+          </div>
+          </div>
+            <div class="card mb-2"  style="background-color: #f0f7fc">
+              <div class="card-header">
+              <div class="row">
+                <div class="col-6"><a href="{% url 'defter_ayrinti' defter.id %}"><h5>{{defter.borclu_isim|title}}</h5></a></div>
+                <div class="col-6 text-right">
+                {{defter.borc_baslangic}}
+                </div>
+              </div>
+              </div>
+              <div class="card-body">
+                <p class="card-text">{{defter.borclu_aciklama|linebreaks }}</p>
+              </div>
+              <div class="card-footer text-muted">
+              <div class="row">
+                <div class="col-6">Tel: {{defter.borclu_telefon}}</div>
+                <div class="col-6 text-right">Ödeme Tarihi: {{defter.borc_son_odeme}}</div>
+              </div>
+              </div>
+            </div>
+        </div>
+      </div>
+</div>
+{% endblock content %}

@@ -42,6 +42,16 @@ def borc_defteri(request):
     defterler = BorcDefteri.objects.all()
     return render(request, 'defter.html', {'defterler': defterler})
 
+def borc_defteri_duzenle(request, id):
+    defter = BorcDefteri.objects.get(id=id)
+    if request.method == "POST":
+        forms = DefterEkleForm(request.POST, instance=defter)
+        if forms.is_valid():
+            forms.save()
+            return redirect("defter")
+    else:
+        forms = DefterEkleForm(instance=defter)
+    return render(request, 'borc_defteri_duzenle.html', {'forms':forms})
 
 def borc_defteri_sil(request, id):
     borc_defteri = BorcDefteri.objects.get(id=id)
