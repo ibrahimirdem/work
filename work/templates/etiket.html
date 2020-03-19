@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Etiket</li>
+        </ol>
+      </nav>
+<div class="col-12">
+    <h3>{{etiket.etiket_adi|title}}</h3>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">İsim</th>
+      <th scope="col">Telefon</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for boyaci in etiket.boyacilar.all %}
+    <tr>
+      <td><a href="{% url 'boyaci_ayrinti' boyaci.id%}">{{ boyaci.isim|title }}</a></td>
+      <td>{{ boyaci.telefon_no }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% endblock content %}

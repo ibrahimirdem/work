@@ -1,5 +1,5 @@
 from django import forms
-from .models import Notlar, BorcDefteri, Boyaci, Etiket
+from .models import Notlar, BorcDefteri, Boyaci, Etiket, VerilenIs
 from django.forms.widgets import CheckboxSelectMultiple
 
 
@@ -29,3 +29,9 @@ class BoyaciEkleForm(forms.ModelForm):
         
         self.fields["boyaci_etiket"].widget = CheckboxSelectMultiple()
         self.fields["boyaci_etiket"].queryset = Etiket.objects.all()
+
+class VerilenIsEkleForm(forms.ModelForm):
+
+    class Meta:
+        model = VerilenIs
+        fields = ('is_alan_boyaci', 'is_aciklama')

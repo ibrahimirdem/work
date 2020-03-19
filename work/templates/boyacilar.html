@@ -33,7 +33,7 @@
       <td>{{boyaci.telefon_no}}</td>
       <td>
       {% for etiket in boyaci.boyaci_etiket.all %}
-        <a href="#" class="badge badge-primary">{{ etiket }}</a>
+        <a href="{% url 'etiket' etiket.id %}" class="badge badge-primary">{{ etiket }}</a>
       {% endfor %}
       </td>
     </tr>

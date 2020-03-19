@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, Http404
-from .models import Notlar, BorcDefteri, Boyaci
-from .forms import NotEkleForm, DefterEkleForm, BoyaciEkleForm
+from .models import Notlar, BorcDefteri, Boyaci, Etiket, VerilenIs
+from .forms import NotEkleForm, DefterEkleForm, BoyaciEkleForm, VerilenIsEkleForm
 
 
 # Create your views here.
@@ -96,6 +96,21 @@ def boyaci_duzenle(request, id):
         forms = BoyaciEkleForm(instance=boyaci)
     return render(request, 'boyaci_duzenle.html', {'forms':forms})
 
-    
+def etiket(request, id):
+    etiket = Etiket.objects.get(id=id)
+    return render(request, 'etiket.html', {'etiket': etiket})
 
+def isler(request):
+    isler = VerilenIs.objects.all()
+    return render(request, 'isler.html', {'isler': isler})
+
+def is_ekle(request):
+    if request.method == "POST":
+        forms = VerilenIsEkleForm(request.POST)
+        if forms.is_valid():
+            forms.save()
+            return redirect("isler")
+    else:
+        forms = VerilenIsEkleForm()
+    return render(request, 'is_ekle.html', {'forms':forms})
     

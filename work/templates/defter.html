@@ -7,39 +7,27 @@
           <div class="col-6"><h3>Borç Defteri</h1></div>
           <div class="col-6 text-right"><a type="button" href="{% url 'defter_ekle' %}" class="btn btn-outline-secondary align-right">Ekle</a></div>
           </div>
-            <table class="table">
-              <caption>List of users</caption>
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">İsim</th>
-                  <th scope="col">Telefon</th>
-                  <th scope="col">Açıklama</th>
-                  <th scope="col">Son Ödeme</th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for defter in defterler %}
-                <tr>
-                  <th scope="row"><div class="btn-group">
-  
-  <button type="button" class="btn btn-sm btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Git</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="{% url 'defter_sil' defter.id %}">Sil</a>
-  </div>
-</div></th>
-                  <td><a href="{% url 'defter_ayrinti' defter.id%}">{{defter.id}}-{{defter.borclu_isim}}</a></td>
-                  <td>{{defter.borclu_telefon}}</td>
-                  <td>{{defter.borclu_aciklama}}</td>
-                  <td>{{defter.borc_son_odeme}}</td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
+          {% for defter in defterler %}
+            <div class="card mb-2"  style="background-color: #f0f7fc">
+              <div class="card-header">
+              <div class="row">
+                <div class="col-6"><a href="{% url 'defter_ayrinti' defter.id %}"><h5>{{defter.borclu_isim|title}}</h5></a></div>
+                <div class="col-6 text-right">
+                {{defter.borc_baslangic}}
+                </div>
+              </div>
+              </div>
+              <div class="card-body">
+                <p class="card-text">{{defter.borclu_aciklama}}</p>
+              </div>
+              <div class="card-footer text-muted">
+              <div class="row">
+                <div class="col-6">Tel: {{defter.borclu_telefon}}</div>
+                <div class="col-6 text-right">Ödeme Tarihi: {{defter.borc_son_odeme}}</div>
+              </div>
+              </div>
+            </div>
+          {% endfor %}
         </div>
       </div>
 </div>

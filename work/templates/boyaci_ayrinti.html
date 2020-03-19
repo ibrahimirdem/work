@@ -40,7 +40,7 @@
             <span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
             <button type="button" class="btn btn-outline-success float-right ml-1">Düzenle</button>
         </a>
-        <a href="#">
+        <a href="{% url 'is_ekle' %}">
             <button type="button" class="btn btn-outline-primary float-right ml-1">İş Ekle</button>
         </a>
         
@@ -60,7 +60,7 @@
             <h5>Etiket</h5>
             <p>
                 {% for etiket in boyaci.boyaci_etiket.all %}
-                    <a href="#" class="badge badge-primary">{{ etiket }}</a>
+                    <a href="{% url 'etiket' etiket.id %}" class="badge badge-primary">{{ etiket }}</a>
                 {% endfor %}
             </p>
         </div>
@@ -68,7 +68,7 @@
         <h6 class="text-muted">YAPTIĞI İŞLER</h6>
         <hr>
         {% if boyaci.verilen_isler.all %}
-        {% for is in boyaci.verilen_isler.all %}
+        {% for is in boyaci.verilen_isler.all  reversed%}
             <h5>{{is.is_tarihi|date:"d M Y"}} - {{is.is_tarihi|timesince}} önce</h5>
             <p>{{is.is_aciklama}}</p>
             <hr>
