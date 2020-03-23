@@ -124,3 +124,6 @@ def is_ekle(request):
         forms = VerilenIsEkleForm()
     return render(request, 'is_ekle.html', {'forms':forms})
     
+def notlar(request):
+    notlar = Notlar.objects.all()
+    return render(request, 'notlar.html', {'notlar': notlar})

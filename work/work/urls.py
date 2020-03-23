@@ -35,5 +35,6 @@ urlpatterns = [
     path('etiket/<id>', views.etiket, name="etiket"),
     path('isler/', views.isler, name="isler"),
     path('isler/ekle', views.is_ekle, name="is_ekle"),
+    path('notlar', views.notlar, name="notlar"),
     
 ]

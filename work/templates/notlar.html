@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    $(document).ready(function(){ 
+        $("#myTab a:first").tab('show'); // show last tab on page load
+    });
+</script>
+<div class="container mt-3">
+<div class="bs-example">
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="nav-item">
+            <a href="#home" class="nav-link" data-toggle="tab">Notlar</a>
+        </li>
+        <li class="nav-item">
+            <a href="#profile" class="nav-link" data-toggle="tab">Yapılanlar</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade" id="home">
+            <ul>
+                {% for notum in notlar %}
+                
+                {% if not notum.yapildi_mi %}
+                <li class="form-check-label">
+                    <input type="checkbox" id="{{notum.id}}" onclick="myFunction(this.id)" class="form-check-input"><span>{{notum.not_aciklama}}</span>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="profile">
+            <ul>
+                {% for notum in notlar %}
+                
+                {% if notum.yapildi_mi %}
+                <li class="form-check-label text-muted">
+                    <input type="checkbox" id="label" class="form-check-input" checked><span style="text-decoration: line-through;">{{notum.not_aciklama}}</span>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul> 
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    function myFunction(isim) {
+
+    }
+</script>
+{% endblock content %}
