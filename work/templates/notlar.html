@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <script>
@@ -7,6 +8,12 @@
     });
 </script>
 <div class="container mt-3">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Notlar</li>
+    </ol>
+</nav>
 <div class="bs-example">
     <ul class="nav nav-tabs" id="myTab">
         <li class="nav-item">
@@ -18,36 +25,72 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane fade" id="home">
-            <ul>
-                {% for notum in notlar %}
+            <ul class="list-group list-group-flush" id="yapilacaklar">
+                {% for notum in notlar reversed%}
                 
                 {% if not notum.yapildi_mi %}
-                <li class="form-check-label">
-                    <input type="checkbox" id="{{notum.id}}" onclick="myFunction(this.id)" class="form-check-input"><span>{{notum.not_aciklama}}</span>
+                <li class="form-check-label list-group-item" id="liste-{{notum.id}}">
+                    <input type="checkbox" id="{{notum.id}}" onclick="myFunction(this.id)" class="form-check-input"><span id="not-{{notum.id}}">{{notum.not_aciklama}}<button type="button"  class="close" aria-label="Close"><a href="{% url 'not_sil' notum.id %}" aria-hidden="true">&times;</a></button></span>
                 </li>
                 {% endif %}
                 {% endfor %}
+                <li class="list-group-item">
+                <form method="POST" class="form-inline m-0" >{% csrf_token %}
+                    {{forms|crispy}}
+                    <button class="btn btn-primary ml-2" type="submit">Ekle</button>
+                </form>
+                </li>
             </ul>
         </div>
         <div class="tab-pane fade" id="profile">
-            <ul>
-                {% for notum in notlar %}
+            <ul  class="list-group list-group-flush" id="yapilanlar">
+                {% for notum in notlar reversed%}
                 
                 {% if notum.yapildi_mi %}
-                <li class="form-check-label text-muted">
-                    <input type="checkbox" id="label" class="form-check-input" checked><span style="text-decoration: line-through;">{{notum.not_aciklama}}</span>
+                <li class="form-check-label text-muted list-group-item" id="liste-{{notum.id}}">
+                    <input type="checkbox" id="{{notum.id}}"  onclick="myFunction(this.id)"  class="form-check-input" checked><span style="text-decoration: line-through;" id="not-{{notum.id}}">{{notum.not_aciklama}}<button type="button"  class="close" aria-label="Close"><a href="{% url 'not_sil' notum.id %}" aria-hidden="true">&times;</a></button></span>
                 </li>
                 {% endif %}
                 {% endfor %}
             </ul> 
         </div>
     </div>
+    
 </div>
 </div>
 
 <script>
     function myFunction(isim) {
-
+        var checkBox = document.getElementById(isim);
+        var metin = document.getElementById("not-"+isim).textContent;
+        var item = document.getElementById("liste-"+isim);
+        if (checkBox.checked == true){
+            item.parentNode.removeChild(item);
+            document.getElementById("yapilanlar").innerHTML = '<li class="form-check-label text-muted list-group-item" id="liste-'+isim+'"><input type="checkbox" id="'+isim+'" onclick="myFunction(this.id)" class="form-check-input" checked><span style="text-decoration: line-through;" id="not-'+isim+'">'+metin+'<button type="button"  class="close" aria-label="Close"><a href="/not_sil/'+isim+'" aria-hidden="true">&times;</a></button>'+'</span></li>'+document.getElementById("yapilanlar").innerHTML;
+            $.ajax({
+                url: '/ajax/validate_username/',
+                data: {'numara': isim, 'deger':'yapildi'},
+                dataType: 'json',
+                success: function (data) {
+                if (data.is_taken) {
+                    console.log('Başarılıl');
+                }
+                }
+            });
+        } else {
+            item.parentNode.removeChild(item);    
+            document.getElementById("yapilacaklar").innerHTML = '<li class="form-check-label list-group-item" id="liste-'+isim+'"><input type="checkbox" id="'+isim+'" onclick="myFunction(this.id)" class="form-check-input"><span id="not-'+isim+'">'+metin+'<button type="button"  class="close" aria-label="Close"><a href="/not_sil/'+isim+'" aria-hidden="true">&times;</a></button>'+'</span></li>'+document.getElementById("yapilacaklar").innerHTML;
+            $.ajax({
+                url: '/ajax/validate_username/',
+                data: {'numara': isim, 'deger':'yapilmadi'},
+                dataType: 'json',
+                success: function (data) {
+                if (data.is_taken) {
+                    console.log('Başarılıl');
+                }
+                }
+            });
+        }
     }
 </script>
 {% endblock content %}

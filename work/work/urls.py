@@ -36,5 +36,6 @@ urlpatterns = [
     path('isler/', views.isler, name="isler"),
     path('isler/ekle', views.is_ekle, name="is_ekle"),
     path('notlar', views.notlar, name="notlar"),
+    path('not_sil/<id>', views.not_sil, name="not_sil"),
     
 ]

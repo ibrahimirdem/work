@@ -4,17 +4,17 @@
 <div class="container mt-3">
 
 <div class="row overflow-auto">
-  <div class="card w-50">
+  <div class="card col-md-6 col-sm-12">
     <div class="card-header">
       Notlar
     </div>
     <div class="card-body overflow-auto pt-1 pl-0" style="height:200px;">
       <ul class="list-group list-group-flush">
       {% for notum in notlar %}
-
+      {% if not notum.yapildi_mi %}
         <li class="list-group-item pt-1 pb-0 pl-3"><input type="checkbox"  id="{{notum.id}}" name="{{notum.id}}" onclick="myFunction(this.name)" {% if notum.yapildi_mi %} checked{% endif %}>
         <label id="label-{{notum.id}}" name="{{notum.id}}" style="text-decoration:{% if notum.yapildi_mi %}line-through{% else %}none{% endif %}; color:{% if notum.yapildi_mi %}gray{% else %}black{% endif %};">{{notum.not_aciklama}}</label></li>
-
+      {% endif %}
       {% endfor %}
       </ul>
     </div>
@@ -23,6 +23,28 @@
         {{forms|crispy}}
         <button class="btn btn-primary ml-2" type="submit">Ekle</button>
       </form>
+    </div>
+  </div>
+  <div class="card col-md-6 col-sm-12">
+    <div class="card-header">
+      Boyacılar
+    </div>
+    <div class="card-body overflow-auto pt-1 pl-0" style="height:200px;">
+    <table class="table table-hover">
+      <tbody>
+      {% for boyaci in boyacilar %}
+        <tr>
+          <td><a href="{% url 'boyaci_ayrinti' boyaci.id %}">{{boyaci.isim|title}}</a></td>
+          <td>{{boyaci.telefon_no}}</td>
+          <td>
+          {% for etiket in boyaci.boyaci_etiket.all %}
+            <a href="{% url 'etiket' etiket.id %}" class="badge badge-primary">{{ etiket }}</a>
+          {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
     </div>
   </div>
 </div>

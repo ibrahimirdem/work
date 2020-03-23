@@ -14,7 +14,8 @@ def ana_sayfa(request):
     else:
         forms = NotEkleForm()
     notlar = Notlar.objects.all()
-    return render(request, 'home.html', {'notlar':notlar, 'forms':forms})
+    boyacilar = Boyaci.objects.all()
+    return render(request, 'home.html', {'notlar':notlar, 'boyacilar': boyacilar, 'forms':forms})
 
 def validate_username(request):
     numara = request.GET.get('numara', None)
@@ -37,6 +38,11 @@ def not_ekle(request):
             'not_aciklama': not_olustur.not_aciklama,
             'yapildi_mi': not_olustur.yapildi_mi}
     return JsonResponse(data)
+
+def not_sil(request, id):
+    notum = Notlar.objects.get(id=id)
+    notum.delete()
+    return redirect('notlar') 
 
 def borc_defteri(request):
     defterler = BorcDefteri.objects.all()
@@ -126,4 +132,11 @@ def is_ekle(request):
     
 def notlar(request):
     notlar = Notlar.objects.all()
-    return render(request, 'notlar.html', {'notlar': notlar})
+    if request.method == "POST":
+        forms = NotEkleForm(request.POST)
+        if forms.is_valid():
+            forms.save()
+            return redirect('notlar')
+    else:
+        forms = NotEkleForm()
+    return render(request, 'notlar.html', {'notlar': notlar, 'forms': forms})
